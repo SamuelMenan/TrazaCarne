@@ -4,7 +4,6 @@ import co.trazacarne.dominio.FormaVenta;
 import co.trazacarne.dominio.Producto;
 import co.trazacarne.dominio.ProductoPorPeso;
 import co.trazacarne.dominio.ProductoPorUnidad;
-import co.trazacarne.dominio.ValidacionDatos;
 import co.trazacarne.excepcion.IdentificadorDuplicadoException;
 import co.trazacarne.excepcion.ReglaNegocioException;
 import co.trazacarne.excepcion.RegistroInactivoException;
@@ -15,8 +14,10 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
+/** Casos de uso de productos: registrar, consultar, listar, cambiar precio y desactivar. */
 public class ServicioProductos {
 
+    // Depende de la interfaz, no de la implementación en memoria.
     private final Repositorio<Producto, String> repositorio;
 
     public ServicioProductos(Repositorio<Producto, String> repositorio) {
@@ -28,6 +29,7 @@ public class ServicioProductos {
         if (forma == null) {
             throw new ReglaNegocioException("La forma de venta es obligatoria.");
         }
+        // Según la forma de venta se crea la subclase correcta (herencia + polimorfismo).
         Producto producto = switch (forma) {
             case POR_PESO -> new ProductoPorPeso(codigo, nombre, especie, tipoCorte, precio);
             case POR_UNIDAD -> new ProductoPorUnidad(codigo, nombre, especie, tipoCorte, precio);
@@ -41,11 +43,15 @@ public class ServicioProductos {
     }
 
     public Producto consultar(String codigo) {
-        String identificador = ValidacionDatos.textoObligatorio(codigo, "El código del producto");
+        if (codigo == null || codigo.isBlank()) {
+            throw new ReglaNegocioException("El código del producto es obligatorio.");
+        }
+        String identificador = codigo.strip();
         return repositorio.buscarPorId(identificador).orElseThrow(() ->
                 new RegistroNoEncontradoException("No existe un producto con el código " + identificador + "."));
     }
 
+    // Lo usan compras y ventas: además de existir, el producto debe estar activo.
     public Producto consultarActivo(String codigo) {
         Producto producto = consultar(codigo);
         if (!producto.estaActivo()) {

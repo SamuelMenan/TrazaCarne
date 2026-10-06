@@ -11,6 +11,7 @@ public class ProductoPorPeso extends Producto {
         super(codigo, nombre, especie, tipoCorte, precio);
     }
 
+    // Polimorfismo: acepta decimales (ej. 1.250 kg), pero máximo 3 (gramos).
     @Override
     public void validarCantidad(BigDecimal cantidad) {
         validarCantidadPositiva(cantidad);

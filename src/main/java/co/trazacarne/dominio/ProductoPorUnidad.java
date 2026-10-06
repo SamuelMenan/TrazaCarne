@@ -11,6 +11,7 @@ public class ProductoPorUnidad extends Producto {
         super(codigo, nombre, especie, tipoCorte, precio);
     }
 
+    // Polimorfismo: solo acepta números enteros (ej. 3 unidades, no 2.5).
     @Override
     public void validarCantidad(BigDecimal cantidad) {
         validarCantidadPositiva(cantidad);

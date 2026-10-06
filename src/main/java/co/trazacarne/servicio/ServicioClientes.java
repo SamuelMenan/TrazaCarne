@@ -1,7 +1,7 @@
 package co.trazacarne.servicio;
 
 import co.trazacarne.dominio.Cliente;
-import co.trazacarne.dominio.ValidacionDatos;
+import co.trazacarne.excepcion.ReglaNegocioException;
 import co.trazacarne.excepcion.IdentificadorDuplicadoException;
 import co.trazacarne.excepcion.RegistroInactivoException;
 import co.trazacarne.excepcion.RegistroNoEncontradoException;
@@ -10,8 +10,10 @@ import co.trazacarne.repositorio.Repositorio;
 import java.util.List;
 import java.util.Objects;
 
+/** Casos de uso de clientes: registrar, consultar, listar, actualizar y desactivar. */
 public class ServicioClientes {
 
+    // Depende de la interfaz, no de la implementación en memoria.
     private final Repositorio<Cliente, String> repositorio;
 
     public ServicioClientes(Repositorio<Cliente, String> repositorio) {
@@ -19,6 +21,7 @@ public class ServicioClientes {
     }
 
     public Cliente registrar(String documento, String nombre) {
+        // Primero se crea (valida los datos) y luego se revisa que el documento no exista.
         Cliente cliente = new Cliente(documento, nombre);
         if (repositorio.existe(cliente.getDocumento())) {
             throw new IdentificadorDuplicadoException(
@@ -29,11 +32,15 @@ public class ServicioClientes {
     }
 
     public Cliente consultar(String documento) {
-        String identificador = ValidacionDatos.textoObligatorio(documento, "El documento del cliente");
+        if (documento == null || documento.isBlank()) {
+            throw new ReglaNegocioException("El documento del cliente es obligatorio.");
+        }
+        String identificador = documento.strip();
         return repositorio.buscarPorId(identificador).orElseThrow(() ->
                 new RegistroNoEncontradoException("No existe un cliente con el documento " + identificador + "."));
     }
 
+    // Lo usan las ventas: además de existir, el cliente debe estar activo.
     public Cliente consultarActivo(String documento) {
         Cliente cliente = consultar(documento);
         if (!cliente.estaActivo()) {

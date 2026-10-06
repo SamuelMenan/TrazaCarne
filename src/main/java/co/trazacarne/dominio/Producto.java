@@ -65,7 +65,18 @@ public abstract class Producto {
         return texto.strip();
     }
 
-    // El precio debe ser positivo y tener máximo 2 decimales.
+    /**
+     * El precio debe ser positivo y tener máximo 2 decimales.
+     *
+     * <ul>
+     *   <li>{@code signum()} devuelve -1, 0 o 1 según el signo; {@code <= 0} rechaza cero y negativos.</li>
+     *   <li>{@code scale()} es la cantidad de decimales. Antes se aplica {@code stripTrailingZeros()}
+     *       para que "1500.000" (que en realidad es 1500) no se rechace por tener 3 decimales.</li>
+     *   <li>{@code setScale(2, UNNECESSARY)} deja todo con 2 decimales ("1500" → "1500.00") sin redondear;
+     *       es seguro porque ya se comprobó que no hay más de 2.</li>
+     * </ul>
+     * Se usa BigDecimal y no double porque double comete errores con dinero (0.1 + 0.2 ≠ 0.3).
+     */
     private static BigDecimal validarPrecio(BigDecimal precio) {
         if (precio == null || precio.signum() <= 0) {
             throw new ReglaNegocioException("El precio debe ser mayor que cero.");
