@@ -2,6 +2,8 @@
 
 Este bloque implementa una parte pequeña del dominio para comprender cómo los requisitos se convierten en clases, comportamiento y pruebas. Se conserva la estructura `co.trazacarne` y se utiliza Java con Maven.
 
+Esta guía conserva la explicación de la primera sesión. La versión actual de `Main` registra los productos mediante servicios; esa evolución se explica en [Segundo bloque: gestión y repositorios](SEGUNDO_BLOQUE_GESTION.md).
+
 ## 1. Por qué empezamos por Producto
 
 Una compra recibe productos y una venta los entrega. Antes de escribir esas operaciones necesitamos saber qué producto se está manejando, cuánto cuesta y qué cantidades acepta.

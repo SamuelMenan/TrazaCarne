@@ -4,9 +4,9 @@ Proyecto académico en Java para gestionar inventario por lotes y conservar la t
 
 ## Estado actual
 
-El primer bloque implementa productos vendidos por peso o por unidad, validación de cantidades, actualización de precio, desactivación y cálculo de subtotales. `Main` ejecuta una demostración de esas clases.
+Están implementados los productos por peso y unidad, los clientes, los abastecedores y sus servicios de gestión. Los repositorios en memoria permiten registrar, consultar, actualizar y listar datos; los servicios permiten desactivar registros conservando sus identidades.
 
-Clientes, abastecedores, compras, lotes, inventario, ventas y el menú de consola se construirán en las siguientes etapas. Los objetos creados durante esta demostración solo existen mientras el programa se ejecuta.
+`Main` crea y conecta los repositorios y servicios, registra datos de demostración y muestra la diferencia entre consultar un cliente inactivo y exigir que esté activo. Compras, lotes, inventario, ventas y el menú de consola se construirán en las siguientes etapas. Los datos solo existen mientras el programa se ejecuta.
 
 ## Requisitos
 
@@ -26,14 +26,17 @@ La versión del JDK puede ajustarse si el curso pide otra, alineando el SDK de I
 La demostración muestra:
 
 ```text
-TrazaCarne: demostración inicial de productos
+TrazaCarne: clientes, abastecedores y productos en memoria
+Registrados: 1 cliente, 2 abastecedores y 2 productos.
 Carne molida | cantidad: 1.250 | subtotal: 30000.00 COP
 Hamburguesa | cantidad: 3 | subtotal: 19500.00 COP
+Cliente conservado: Cliente de demostración | activo: false
+Validación de nueva operación: El cliente 1001 está inactivo.
 ```
 
 ## Ejecutar pruebas
 
-En IntelliJ se puede ejecutar `ProductoTest` desde el botón verde o abrir el panel Maven y utilizar **Lifecycle > test**.
+En IntelliJ se puede ejecutar una clase de pruebas desde el botón verde o abrir el panel Maven y utilizar **Lifecycle > test** para ejecutar todas.
 
 Si Maven está disponible en la terminal, ejecutar desde la carpeta de `pom.xml`:
 
@@ -41,7 +44,7 @@ Si Maven está disponible en la terminal, ejecutar desde la carpeta de `pom.xml`
 mvn test
 ```
 
-Las pruebas comprueban cantidades por peso y unidad, datos obligatorios, precios inválidos, conservación del precio anterior, redondeo y validación polimórfica.
+Las 112 comprobaciones actuales cubren cantidades, precios, participantes, registro y actualización, duplicados, registros inactivos, datos inexistentes y contratos del repositorio. Los casos de producto del primer bloque siguen pasando.
 
 ## Crear y ejecutar el archivo JAR
 
@@ -58,9 +61,12 @@ El JAR utiliza `co.trazacarne.Main` como punto de entrada. JUnit es una dependen
 
 | Ubicación | Contenido |
 |---|---|
-| `src/main/java/co/trazacarne/dominio` | Productos y sus reglas de negocio. |
+| `src/main/java/co/trazacarne/dominio` | Productos, clientes, abastecedores y sus reglas de negocio. |
+| `src/main/java/co/trazacarne/servicio` | Gestión de clientes, abastecedores y productos. |
+| `src/main/java/co/trazacarne/repositorio` | Contrato de almacenamiento. |
+| `src/main/java/co/trazacarne/repositorio/memoria` | Implementación en memoria. |
 | `src/main/java/co/trazacarne/excepcion` | Motivos de rechazo de operaciones. |
-| `src/test/java/co/trazacarne/dominio` | Pruebas de comportamiento del dominio. |
+| `src/test/java/co/trazacarne` | Pruebas de dominio, repositorios y servicios. |
 | `docs` | Plan y explicación de la implementación. |
 | `target` | Clases compiladas, resultados de pruebas y JAR. |
 
@@ -70,6 +76,7 @@ El JAR utiliza `co.trazacarne.Main` como punto de entrada. JUnit es una dependen
 
 - [Plan de implementación](docs/PLAN_IMPLEMENTACION.md).
 - [Primer bloque: productos y POO](docs/PRIMER_BLOQUE_PRODUCTOS.md).
+- [Segundo bloque: gestión y repositorios](docs/SEGUNDO_BLOQUE_GESTION.md).
 
 Referencias técnicas utilizadas para configurar las herramientas:
 

@@ -59,7 +59,15 @@ Se prepararon Maven y JUnit, se comprobó el JDK 27 configurado y se implementar
 
 Las decisiones adoptadas sobre cantidades, precios y redondeo, junto con su explicación, están en [Primer bloque: productos y POO](PRIMER_BLOQUE_PRODUCTOS.md). Las instrucciones de ejecución están en [README](../README.md). La demostración del JAR se ejecutó y produjo los subtotales esperados: `30000.00 COP` para 1.250 kg y `19500.00 COP` para tres unidades.
 
-Los tipos relacionados con abastecedores, ventas y movimientos se crearán cuando se implemente la primera clase que los necesite. Las decisiones de fechas y trazabilidad permanecen pendientes para sus etapas.
+### Avance de la segunda sesión
+
+La etapa 3 quedó implementada: `Cliente`, `Abastecedor`, `TipoAbastecedor`, `FormaVenta`, repositorio genérico en memoria y servicios de clientes, abastecedores y productos. Se añadieron errores específicos de identificador duplicado, registro inexistente y registro inactivo.
+
+Los servicios normalizan los identificadores, rechazan duplicados activos e inactivos, consultan, actualizan y desactivan conservando los registros. `Main` entrega los repositorios mediante interfaces y demuestra una desactivación. Las 112 comprobaciones, la compilación y la ejecución del JAR finalizaron correctamente.
+
+El contrato distingue `guardar` un registro nuevo de `actualizar` uno existente. Las consultas de registros inactivos siguen disponibles; `consultarActivo` permite exigir su disponibilidad para nuevas operaciones. La explicación está en [Segundo bloque: gestión y repositorios](SEGUNDO_BLOQUE_GESTION.md).
+
+Los tipos relacionados con ventas y movimientos se crearán cuando se implemente la primera clase que los necesite. Las decisiones de fechas y trazabilidad permanecen pendientes para sus etapas.
 
 Crear paquetes prepara la organización del código. Las reglas de POO y SOLID se demostrarán al implementar las clases y sus relaciones.
 
@@ -621,9 +629,9 @@ Las pruebas de una etapa previa se repetirán cuando un cambio pueda afectarlas.
 Esta lista puede marcarse durante el desarrollo. Los puntos aún no están completados por el hecho de aparecer en el plan.
 
 - [x] Etapa 0: proyecto, JDK, Maven y pruebas preparados.
-- [ ] Etapa 1: tipos básicos y errores de negocio (excepciones iniciales implementadas; enumeraciones pendientes).
+- [ ] Etapa 1: tipos básicos y errores de negocio (excepciones, `TipoAbastecedor` y `FormaVenta` implementados; estados de venta y movimientos pendientes).
 - [x] Etapa 2: productos y validación polimórfica.
-- [ ] Etapa 3: clientes, abastecedores y repositorios.
+- [x] Etapa 3: clientes, abastecedores y repositorios.
 - [ ] Etapa 4: compras, lotes y entradas.
 - [ ] Etapa 5: existencias vendibles y FEFO.
 - [ ] Etapa 6: ventas completas y precio histórico.
