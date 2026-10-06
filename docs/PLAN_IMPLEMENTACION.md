@@ -69,6 +69,14 @@ El contrato distingue `guardar` un registro nuevo de `actualizar` uno existente.
 
 Los tipos relacionados con ventas y movimientos se crearán cuando se implemente la primera clase que los necesite. Las decisiones de fechas y trazabilidad permanecen pendientes para sus etapas.
 
+### Entrega de los bloques restantes: 6 de octubre de 2026
+
+La primera versión de consola quedó implementada con compras, lotes, inventario, FEFO, ventas, anulación, trazabilidad, pérdidas y movimientos. Se completaron los tipos y errores pendientes y se incorporaron DTO de entrada y salida. El arranque normal abre un menú real; la opción `--demo` ejecuta el flujo reproducible de 5 + 3 kg.
+
+Cada entidad conserva sus propias validaciones, según la decisión acordada. La fecha de operación procede del reloj entregado a los servicios; en uso normal se emplea `America/Bogota` y las pruebas utilizan relojes fijos. La recepción rechaza lotes vencidos, exige procesamiento no posterior a la recepción y conserva sacrificio cuando corresponde. El historial exige un orden temporal no retroactivo. Las pérdidas se registran explícitamente y las anuladas pueden consultarse con su estado.
+
+Las 158 comprobaciones integradas finalizaron sin fallos ni errores. Las nuevas guías detalladas por archivo están en el [índice de bloques](INDICE_GUIAS.md). Allí también se describen los cambios que deberán reflejarse en los diagramas originales: DTO, estado de borrador y asignación FEFO sin descuento inmediato.
+
 Crear paquetes prepara la organización del código. Las reglas de POO y SOLID se demostrarán al implementar las clases y sus relaciones.
 
 ## 3. De dónde sale el código
@@ -626,25 +634,26 @@ Las pruebas de una etapa previa se repetirán cuando un cambio pueda afectarlas.
 
 ## 15. Seguimiento del avance
 
-Esta lista puede marcarse durante el desarrollo. Los puntos aún no están completados por el hecho de aparecer en el plan.
+Esta lista refleja el avance comprobado del código y las guías. La actualización gráfica de los diagramas originales queda distinguida de esta entrega de código y Markdown.
 
 - [x] Etapa 0: proyecto, JDK, Maven y pruebas preparados.
-- [ ] Etapa 1: tipos básicos y errores de negocio (excepciones, `TipoAbastecedor` y `FormaVenta` implementados; estados de venta y movimientos pendientes).
+- [x] Etapa 1: tipos básicos y errores de negocio, incluidos estados de venta y tipos de movimiento.
 - [x] Etapa 2: productos y validación polimórfica.
 - [x] Etapa 3: clientes, abastecedores y repositorios.
-- [ ] Etapa 4: compras, lotes y entradas.
-- [ ] Etapa 5: existencias vendibles y FEFO.
-- [ ] Etapa 6: ventas completas y precio histórico.
-- [ ] Etapa 7: anulación con devolución al origen.
-- [ ] Etapa 8: trazabilidad en ambos sentidos.
-- [ ] Etapa 9: consultas de inventario y pérdidas.
-- [ ] Etapa 10: consola y conexión en `Main`.
-- [ ] Etapa 11: verificación de entrega y documentación.
-- [ ] Decisiones de cantidades, importes y fechas documentadas.
-- [ ] Escenario completo de 8 kg comprobado.
-- [ ] Rechazos importantes conservan el estado anterior.
-- [ ] Diagramas y código reflejan las mismas responsabilidades.
-- [ ] Instrucciones de ejecución y límites de la versión disponibles.
+- [x] Etapa 4: compras, lotes y entradas.
+- [x] Etapa 5: existencias vendibles y FEFO.
+- [x] Etapa 6: ventas completas y precio histórico.
+- [x] Etapa 7: anulación con devolución al origen.
+- [x] Etapa 8: trazabilidad en ambos sentidos.
+- [x] Etapa 9: consultas de inventario y pérdidas.
+- [x] Etapa 10: consola y conexión en `Main`.
+- [x] Etapa 11: verificación de entrega de código y guías.
+- [x] Decisiones de cantidades, importes y fechas documentadas.
+- [x] Escenario completo de 8 kg comprobado.
+- [x] Rechazos importantes conservan el estado anterior.
+- [x] Cambios de contratos respecto al UML explicados en el índice y las guías.
+- [ ] Actualizar la representación gráfica de los diagramas originales; fuera de esta entrega de código y Markdown.
+- [x] Instrucciones de ejecución y límites de la versión disponibles.
 
 ## 16. Primera sesión de implementación
 

@@ -20,7 +20,6 @@ La consola completa se implementará después. Por ahora `Main` demuestra los se
 | `Abastecedor` | NIT y tipo fijos, nombre actualizable y estado activo. |
 | `TipoAbastecedor` | Distinguir `MATADERO` y `PROVEEDOR`. |
 | `FormaVenta` | Indicar qué variante de producto crear al registrarlo. |
-| `ValidacionDatos` | Compartir la comprobación y normalización de textos obligatorios. |
 | `Repositorio<T, ID>` | Contrato para guardar, buscar, actualizar y listar. |
 | `RepositorioEnMemoria<T, ID>` | Implementar ese contrato mediante un mapa. |
 | `ServicioClientes` | Coordinar la gestión de clientes. |
@@ -30,7 +29,7 @@ La consola completa se implementará después. Por ahora `Main` demuestra los se
 | `RegistroNoEncontradoException` | Comunicar que un registro solicitado no existe. |
 | `RegistroInactivoException` | Comunicar que un registro no puede utilizarse como activo. |
 
-`FormaVenta`, `ValidacionDatos`, la operación de actualización del repositorio y la excepción de registro inexistente concretan necesidades de implementación. Los diagramas originales orientan el diseño; estas incorporaciones deben reflejarse cuando se actualice su versión.
+`FormaVenta`, la operación de actualización del repositorio y la excepción de registro inexistente concretan necesidades de implementación. Los diagramas originales orientan el diseño; estas incorporaciones deben reflejarse cuando se actualice su versión.
 
 ## 3. De dónde sale cada responsabilidad
 
@@ -47,6 +46,8 @@ La consola completa se implementará después. Por ahora `Main` demuestra los se
 El documento pide identificadores obligatorios y únicos. En esta etapa se aceptan textos no vacíos y se eliminan espacios de sus extremos; no se añade una regla nueva sobre longitud, formato numérico o dígito de verificación.
 
 ## 4. Dominio: qué protege cada objeto
+
+La decisión para este proyecto es que cada entidad conserve sus propias validaciones mediante métodos privados, como `validarTexto()`. Se acepta repetir la pequeña comprobación de texto obligatorio para mantener los requisitos de cada entidad junto a ella, siguiendo el mismo criterio que `Producto`. Los servicios comprueban los identificadores de búsqueda y las condiciones que requieren consultar otros registros. No se utiliza una clase global de validaciones.
 
 `Cliente` conserva su documento como `final`. Puede actualizar su nombre, pero la nueva información se valida antes de asignarse. Un nombre inválido deja intacto el anterior.
 
